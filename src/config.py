@@ -37,3 +37,55 @@ TABLE_DAYLIGHT_OVERDFRAT = "TABLE_DAYLIGHT_OVERDFRAT"
 TABLE_ELASTICITY = "TABLE_ELASTICITY"
 
 OFR_DATE_START_DATE = datetime(2018, 4, 2)
+
+FRED_SERIES_NAME_MAP = {
+        "effr": TABLE_EFFR,
+        "rrp_volume": TABLE_RRP_VOLUME,
+        "rrp_rate": TABLE_RRP_RATE,
+        "foreign_rrp": TABLE_FOREIGN_RRP,
+        "fed_reserve_balance": TABLE_RESERVE_BALANCE,
+        "iorb": TABLE_IORB,
+        "tga_balance": TABLE_TGA_BALANCE,
+}
+
+OFR_SERIES_NAME_MAP = {
+        "sofr": "SOFRA",
+        "bgcr": "BGCRA",
+        "obfr": "OBFRA",
+        "tgcr": "TGCRA",
+        "effr": "EFFRA",
+
+        "sofr_volume": "SOFR_UVA",
+        "bgcr_volume": "BGCR_UVA",
+        "obfr_volume": "OBFR_UVA",
+        "tgcr_volume": "TGCR_UVA",
+        "effr_volume": "EFFR_UVA",
+}
+
+# TYPE_BILL = "Bill"
+# TYPE_BOND = "Bond"
+# TYPE_NOTE = "Note"
+# TYPE_CMB = "CMB"
+# TYPE_TIPS_BOND = "TIPS Bond"
+# TYPE_TIPS_NOTE = "TIPS Note"
+# TYPE_FRN_NOTE = "FRN Note"
+
+TREASURY_SEC_MAP = {
+    "bill": "Bill",
+    "cmb": "CMB",
+    "frn": "FRN Note",
+    "note": "Note",
+    "bond": "Bond",
+    "tips_note": "TIPS Note",
+    "tips_bond": "TIPS Bond",
+}
+
+TREASURY_DATA_TYPE_MATURING = "MATURING_AMOUNT"
+TREASURY_DATA_TYPE_OUTSTANDING = "OUTSTANDING_AMOUNT"
+TREASURY_DATA_TYPE_SETTLEMENT = "SETTLEMENT_AMOUNT"
+
+TREASURY_DATA_MAP = {
+    "maturing": TREASURY_DATA_TYPE_MATURING,
+    "settlement": TREASURY_DATA_TYPE_SETTLEMENT,
+    "outstanding": TREASURY_DATA_TYPE_OUTSTANDING
+}
