@@ -1,8 +1,8 @@
 from datetime import datetime
 
-HOST = "34.148.149.200"
-USER = "root"
-PWD = "Ljs084719@@" #@@"
+HOST = ""
+USER = ""
+PWD = ""
 
 DATABASE_STIR = "STIR_DB"
 TABLE_FF_DECOMP_VOLUME = "TABLE_FF_DECOMP_VOLUME"
