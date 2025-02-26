@@ -19,7 +19,7 @@ def query_series(series_name:str):
 def query_treasury_series_maturing(sec_type: str):
     if sec_type in src.config.TREASURY_SEC_MAP:
         return src.read_data_utils.read_treasury_data(src.config.TREASURY_SEC_MAP[sec_type],
-                                                      src.config.TREASURY_DATA_TYPE_MATURING)
+                                                      src.config.TREASURY_DATA_TYPE_REDEMPTION)
 
 @app.get("/treasury_outstanding/{sec_type}")
 def query_treasury_series_outstanding(sec_type: str):
@@ -31,4 +31,8 @@ def query_treasury_series_outstanding(sec_type: str):
 def query_treasury_series_settlement(sec_type: str):
     if sec_type in src.config.TREASURY_SEC_MAP:
         return src.read_data_utils.read_treasury_data(src.config.TREASURY_SEC_MAP[sec_type],
-                                                      src.config.TREASURY_DATA_TYPE_SETTLEMENT)
+                                                      src.config.TREASURY_DATA_TYPE_OFFERING)
+
+@app.get("/h8/{code}")
+def query_h8_data(code: str):
+    return src.read_data_utils.read_h8_data(code)

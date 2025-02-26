@@ -117,7 +117,7 @@ def __treasury_data_wrapper(sec_type, data_type):
     connection = db_pool.get_connection()
     cursor = connection.cursor(dictionary=True)
 
-    table_name = f"TABLE_{sec_type.upper().replace(' ', '')}_OUTSTANDING_AMOUNT"
+    table_name = f"TABLE_{sec_type.upper().replace(' ', '')}_{data_type}"
     cursor.execute(f"SELECT * FROM {table_name}")
     data = cursor.fetchall()
     result = {}
@@ -179,6 +179,27 @@ def read_daylight_overdraft_table():
         return_value = future.result()
     return return_value
 
+@functools.lru_cache(maxsize=1024)
+def __h8_data():
+    db_pool = get_pool_db()
+    connection = db_pool.get_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(f"SELECT * FROM {src.config.TABLE_H8}")
+    data = cursor.fetchall()
+    result = {}
+    for row in data:
+        key = row["name"]
+        date = row["date"]
+        if key not in result:
+            result[key] = OrderedDict()
+        result[key][date] = row["value"]
+    for key in result:
+        result[key] = dict(sorted(result[key].items()))
+
+    cursor.close()
+    connection.close()
+
+    return result
 
 def __elasticity_wrapper():
     db_pool = get_pool_db()
@@ -208,3 +229,9 @@ def read_elasticity_table():
         future = executor.submit(__elasticity_wrapper)
         return_value = future.result()
     return return_value
+
+def read_h8_data(code):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future = executor.submit(__h8_data)
+        return_value = future.result()
+    return return_value.get(code, {})

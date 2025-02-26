@@ -131,6 +131,35 @@ def update_tga_balance_data():
 
     db.commit()
 
+def update_h8_data(h8_data):
+
+    table_name = src.config.TABLE_H8
+    drop_fred_related_table(table_name)
+    db = get_database(src.config.DATABASE_STIR)
+    cursor = db.cursor()
+
+    cursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ("
+                   f"name VARCHAR(255), date DATE, value FLOAT, "
+                   f"PRIMARY KEY (name, date))")
+
+    query = (f"INSERT INTO {table_name} (name, date, value)"
+           f" VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE value=values(value)")
+
+    # Insert or update the data
+    inx = 0
+    for dataset_name, rows in h8_data.items():
+        data_rows = []
+        for date, value in rows.items():
+            data_rows += [(dataset_name, date, value)]
+
+        cursor.executemany(query, data_rows)
+        inx+=1
+        print(dataset_name, inx, len(h8_data))
+
+    db.commit()
+    cursor.close()
+    db.close()
+
 def update_ofr_on_data():
     url = "https://data.financialresearch.gov/v1/series/dataset?dataset=fnyr"
     data = requests.get(url, timeout=60)
